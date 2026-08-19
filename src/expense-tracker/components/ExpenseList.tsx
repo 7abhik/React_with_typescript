@@ -1,21 +1,16 @@
-const ExpenseList = () => {
-  const Items = [
-    {
-      description: "Milk",
-      amount: 10,
-      category: "Groceries",
-    },
-    {
-      description: "Eggs",
-      amount: 5,
-      category: "Groceries",
-    },
-    {
-      description: "Electricity",
-      amount: 15,
-      category: "Utilities",
-    },
-  ];
+interface expenses {
+  id: number;
+  description: string;
+  amount: number;
+  category: string;
+}
+
+interface Props {
+  expenses: expenses[];
+  onDelete: (id: number) => void;
+}
+
+const ExpenseList = ({ expenses, onDelete }: Props) => {
   return (
     <table className="table table-bordered">
       <thead>
@@ -27,17 +22,32 @@ const ExpenseList = () => {
         </tr>
       </thead>
       <tbody>
-        {Items.map((item, index) => (
-          <tr key={index + "0"}>
-            <td key={item.description}>{item.description}</td>
-            <td key={item.amount + ""}>{item.amount}</td>
-            <td key={item.category + index}>{item.category}</td>
-            <td key={index + "1"} className="text-danger">
-              Delete
+        {expenses.map((expense, index) => (
+          <tr key={expense.id}>
+            <td>{expense.description}</td>
+            <td>{expense.amount}</td>
+            <td>{expense.category}</td>
+            <td>
+              <button
+                className="btn btn-outline-danger"
+                onClick={() => onDelete(expense.id)}
+              >
+                Delete
+              </button>
             </td>
           </tr>
         ))}
       </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td>
+            $ {expenses.reduce((acc, expense) => expense.amount + acc, 0)}
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   );
 };

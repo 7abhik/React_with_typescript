@@ -1,13 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
+const Schema = z.object({
+  desc: z.string().min(3),
+  amt: z.number({ invalid_type_error: "amount is required" }),
+  cat: z.string().min(3),
+});
+type FormData = z.infer<typeof Schema>;
+interface Props {
+  expense: FormData;
+  addExpenses: () => void;
+}
 const ExpenseForm = () => {
-  const Schema = z.object({
-    desc: z.string().min(3),
-    amt: z.number({ invalid_type_error: "amount is required" }),
-    cat: z.string().min(3),
-  });
-  type FormData = z.infer<typeof Schema>;
   const {
     register,
     handleSubmit,
