@@ -1,59 +1,23 @@
-// import Form from "./components/Form";
-import ExpenseFilter from "./expense-tracker/components/ExpenseFilter";
-import ExpenseList from "./expense-tracker/components/ExpenseList";
-import ExpenseForm from "./expense-tracker/components/ExpenseForm";
 import { useState } from "react";
+import ProductList from "./components/ProductList";
 
 function App() {
-  const [expenses, setExpenses] = useState([
-    {
-      id: 1,
-      description: "Milk",
-      amount: 10,
-      category: "Groceries",
-    },
-    {
-      id: 2,
-      description: "Eggs",
-      amount: 5,
-      category: "Groceries",
-    },
-    {
-      id: 3,
-      description: "Electricity",
-      amount: 15,
-      category: "Utilities",
-    },
-    {
-      id: 4,
-      description: "Movies",
-      amount: 50,
-      category: "Entertainment",
-    },
-  ]);
-  const [selectedCategory, setSelectedCatgory] = useState("");
-  const isVisibleCategories = expenses.filter((e) =>
-    selectedCategory ? e.category === selectedCategory : expenses,
-  );
+  const [category, setCategory] = useState("");
+
   return (
     <div>
-      {/* <Form /> */}
-      <ExpenseForm
-        addExpenses={(data) => {
-          setExpenses([...expenses, { ...data, id: expenses.length + 1 }]);
-        }}
-      />
-      <ExpenseFilter
-        handleExpenseFilter={(selectedCategory) =>
-          setSelectedCatgory(selectedCategory)
-        }
-      />
-      <ExpenseList
-        expenses={isVisibleCategories}
-        onDelete={(id) => {
-          setExpenses(expenses.filter((e) => e.id !== id));
-        }}
-      />
+      <select
+        name=""
+        id=""
+        onChange={(event) => setCategory(event.target.value)}
+        className="form-select"
+      >
+        <option value="">Select Category</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Household">Household</option>
+      </select>
+      <ProductList category={category} />
+      {/* <input ref={ref} type="text" className="form-control" /> */}
     </div>
   );
 }
